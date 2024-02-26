@@ -1,6 +1,7 @@
 from datetime import datetime
 from random import random
 import requests
+from requests.models import Response
 
 
 def display_menu():
@@ -64,9 +65,31 @@ def main():
         else:
             print('Invalid input remember input must be in the range 1-4')
 
-def weather_starter(){
+def weather_starter(api_key, city):
+    base_url = "http://api.openweathermap.org/data/2.5/weather"
+    params = {
+        'q': city,
+        'appid': api_key,
+        'units': 'metric' #this can be changed to imperial for farenheit
+    }
 
-}
+    try:
+        response = requests.get(base_url, params=params)
+        data = response.json()
+
+        if response.status_code == 200:
+           temperature = data['main']['temp']
+           for condition in data['weather']:
+               weather_description = condition['description']
+               print(f"Weather in {city}: {weather_description}, Temperature: {temperature}°C")
+        else:
+           print(f"Error: {data['message']}")
+    except Exception as e:
+        print(f"An error occurred: {str(e)}")
+
+api_key = 'b873c5438d01611faf27dc8ee7a345dd'
+city_name = 'Panama'
 
 if __name__ == "__main__":
     main()
+    weather_starter(api_key, city_name)
