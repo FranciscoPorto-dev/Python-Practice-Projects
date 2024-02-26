@@ -1,11 +1,12 @@
 from datetime import datetime
 from random import random
+import requests
 
 
 def display_menu():
     current_time = datetime.now().time()
     hour = current_time.hour
-    
+
     if 6 <= hour < 12:
         print('Good Morning and welcome to your to-do list :)')
     elif 12 <= hour < 18:
@@ -63,7 +64,9 @@ def main():
         else:
             print('Invalid input remember input must be in the range 1-4')
 
+def weather_starter(){
+
+}
+
 if __name__ == "__main__":
     main()
-
-   
